@@ -1,0 +1,438 @@
+-- 상품 테이블 생성
+create table products(
+    num number primary key,
+    writer varchar2(25),
+    name varchar2(100),
+    comments varchar2(50),    
+    image01 varchar2(50) not null,
+    image02 varchar2(50),
+    image03 varchar2(50),
+    price number default 0,
+    category varchar2(255),
+    inputdate date default sysdate,
+    cate varchar2(100),
+    address varchar2(255)
+);
+
+-- 상품 카테고리 테이블 생성
+create table categories(
+	engname varchar2(50) primary key,
+	korname varchar2(50)
+);
+
+-- 찜목록 카테고리 생성
+create table ShoppingBaskets(
+    mid varchar2(30),
+    pnum number default 0
+);
+
+-- 상품 댓글 테이블 생성
+create table comments(
+   cnum number primary key,
+   no int,
+   writer varchar2(255),
+   content varchar2(255),   
+   regdate date default sysdate 
+);
+
+-- 회원 테이블 생성
+create table members(
+    id varchar2(30) primary key,
+    password varchar2(50),
+    name varchar2(50) not null,
+    age number default 0,
+    phone number default 0,  
+    address varchar2(255),
+    gender varchar2(10),
+    hobby varchar2(255),
+    hiredate date default sysdate,
+    mpoint number default 0,
+    remark varchar2(255) default' '
+);
+
+-- 거래현황 테이블 생성
+create table catee(korea varchar2(100) primary key); 
+
+-- 공지사항 테이블 생성
+create table notice(
+    no number primary key,
+    writer varchar2(100),
+    subject varchar2(150) not null,    
+    content varchar2(255),    
+    regdate date default sysdate,
+    readhit number default 0,
+    remark varchar2(255),
+    groupno number default 0,
+    orderno number default 0,
+    depth number default 0 
+); 
+
+-- QNA 테이블 생성
+create table qna(
+    no number primary key,
+    writer varchar2(100),
+    subject varchar2(150) not null,    
+    content varchar2(255),    
+    regdate date default sysdate,
+    readhit number default 0,
+    remark varchar2(255),
+    groupno number default 0,
+    orderno number default 0,
+    depth number default 0 
+); 
+
+-- QNA 댓글 테이블 생성
+create table qnacomments(
+    cnum number primary key,
+    no number,
+    writer varchar2(250),
+    content varchar2(250),
+    regdate date default sysdate
+);
+
+-- 리뷰 테이블 생성
+create table REVIEW(
+    no number primary key,
+    writer varchar2(150),
+    subject varchar2(100) not null,    
+    content varchar2(255), 
+    image01 varchar2(50) not null,
+    image02 varchar2(50),
+    regdate date default sysdate,
+    readhit number default 0,
+    remark varchar2(255),
+    groupno number default 0,
+    orderno number default 0,
+    depth number default 0   
+);
+
+-- 리뷰 댓글 테이블 생성 
+create table reviewcomments(
+    cnum number primary key,
+    no number,
+    writer varchar2(250),
+    content varchar2(250),
+    regdate date default sysdate
+);
+
+-- 사기이력조회 테이블 생성
+create table fraudboard(
+    no number primary key,
+    id varchar2(100) not null,
+    mid varchar2(100),
+    phone varchar2(255),
+    name varchar2(100) ,    
+    fraud varchar2(255), 
+    frauddetail varchar2(255) ,
+    regdate date default sysdate
+);
+
+create sequence myproduct start with 1 increment by 1 nocache;
+create sequence mycomment start with 1 increment by 1 nocache ;
+create sequence mynotice start with 1 increment by 1 nocache;
+create sequence myqna start with 1 increment by 1 nocache;
+create sequence myqnacomment start with 1 increment by 1 nocache;
+create sequence myreview start with 1 increment by 1 nocache;
+create sequence myreviewcomment start with 1 increment by 1 nocache;
+create sequence myfraudboard start with 1 increment by 1 nocache;
+
+
+-- 상품 카테고리
+insert into categories values('car', '자동차');
+insert into categories values('acc', '악세사리');
+insert into categories values('clothing', '의류');
+insert into categories values('electronics', '가전제품');
+insert into categories values('furniture', '가구');
+
+-- 회원
+insert into members values('admin', '1234', '관리자', 20, 0105244123, '가산구 금천동 kosmo', '남자', null,  sysdate, 0, null);
+insert into members values('hong', '1234', '홍길동', 30, 01012345678, '양천구 신정동 computer', '남자', null, sysdate, 0, null);
+insert into members values('park', '1234', '박영희', 40, 01078964564, '마포구 대흥동 member', '여자', null, sysdate, 0, null);
+insert into members values('yusin', '1234', '김유신', 40, 01078964564, '마포구 대흥동 member', '여자', null, sysdate, 0, null);
+
+-- 거래현황
+insert into catee values ('거래중');
+insert into catee values ('거래완료');
+
+-- 상품
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '기아 토레스', '신차급 컨디션의 토레스입니다.', 'car1.jpg', 'car1-2.jpg', 'car1-3.jpg', 23000000, 'car', '23/01/01', '거래중', '서울시 강남구 역삼동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '구식 그랜져', '상태 깔끔해요.', 'car2.jpg', 'car2-2.jpg', 'car2-3.jpg', 8000000, 'car', '23/01/02', '거래중', '서울시 강남구 역삼동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '구식 제네시스', '엔진상태 훌륭합니다.', 'car3.jpg', 'car3-2.jpg', 'car3-3.jpg', 7000000, 'car', '23/01/03', '거래중', '서울시 강남구 역삼동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '산타페', '애정주며 타던 차량입니다.', 'car4.jpg', 'car4-2.jpg', 'car4-3.jpg', 15000000, 'car', '23/01/04', '거래중', '서울시 강남구 개포동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '중고 쌍용 팔아요', '아버지께서 몰던 차입니다.', 'car5.jpg', 'car5-2.jpg', 'car5-3.jpg', 16000000, 'car', '23/01/05', '거래완료', '서울시 강남구 개포동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '봉고차 팝니다', '급처합니다. ', 'car6.jpg', 'car6-2.jpg', 'car6-3.jpg', 20000000, 'car', '23/01/06', '거래중', '서울시 강남구 개포동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '신형 투싼 급처', 'S급 상태입니다.', 'car7.jpg', 'car7-2.jpg', 'car7-3.jpg', 22000000, 'car', '23/01/07', '거래중', '서울시 강남구 개포동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '제네시스 S급 팔아요', '신차급 제네시스 구형 입니다.', 'car8.jpg', 'car8-2.jpg', 'car8-3.jpg', 26000000, 'car', '23/01/08', '거래중', '서울시 강남구 청담동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '신형 제네시스 g70 팝니다.', '관리 잘해줘서 상태 매우 깔끔합니다.', 'car9.jpg', 'car9-2.jpg', 'car9-3.jpg', 43000000, 'car', '23/01/09', '거래중', '서울시 강남구 청담동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '현대 아이오닉', '중고 전기차 판매합니다.', 'car10.jpg', 'car10-2.jpg', 'car10-3.jpg', 52000000, 'car', '23/01/10', '거래중', '서울시 강남구 청담동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '오래된 레이 급처분 합니다. ', '내부는 깔끔합니다.', 'car11.jpg', 'car11-2.jpg', 'car11-3.jpg', 9000000, 'car', '23/01/11', '거래중', '서울시 강남구 삼성동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '제네시스 싼 가격에 가져가세요.', '네고 안됩니다.', 'car12.jpg', 'car12-2.jpg', 'car12-3.jpg', 50000000, 'car', '23/01/12', '거래중', '서울시 강남구 삼성동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '튜닝 카니발 팔아요', '애마 급처분 합니다.', 'car13.jpg', 'car13-2.jpg', 'car13-3.jpg', 29000000, 'car', '23/01/13', '거래중', '서울시 강남구 삼성동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '쏘렌토 오늘 가져가실 분만', '돈이 급해 오늘만 팝니다.', 'car14.jpg', 'car14-2.jpg', 'car14-3.jpg', 18000000, 'car', '23/01/14', '거래중', '서울시 강남구 삼성동');
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', 'LG중고 세탁기', '상태 깨끗하고 하자 없습니다.', 'electronics1.jpg', 'electronics1-2.jpg', 'electronics1-3.jpg', 800000, 'electronics', '23/01/01', '거래중', '서울시 은평구 수색동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '딤채 냉장고 팔아요~', '상태 깔끔해요.', 'electronics2.jpg', 'electronics2-2.jpg', 'electronics2-3.jpg', 700000, 'electronics', '23/01/02', '거래중', '서울시 은평구 수색동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '옛날 세탁기 싸게 팝니다.', '작동은 잘 됩니다.', 'electronics3.jpg', 'electronics3-2.jpg', 'electronics3-3.jpg', 300000, 'electronics', '23/01/03', '거래중', '서울시 은평구 수색동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '흰색 통돌이 세탁기 팔아요', '급처분 합니다.', 'electronics4.jpg', 'electronics4-2.jpg', 'electronics4-3.jpg', 500000, 'electronics', '23/01/04', '거래중', '서울시 은평구 불광동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '벽걸이형 TV 팔아요~', '몇번 사용하지 않은 TV입니다.', 'electronics5.jpg', 'electronics5-2.jpg', 'electronics5-3.jpg', 250000, 'electronics', '23/01/05', '거래중', '서울시 은평구 불광동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '고급형 세탁건조기 팝니다.', '산지 얼마 안된 아이입니다.', 'electronics6.jpg', 'electronics6-2.jpg', 'electronics6-3.jpg', 2000000, 'electronics', '23/01/06', '거래중', '서울시 은평구 불광동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '3단형 냉장고 팝니다.', '크기가 무척 커요', 'electronics7.jpg', 'electronics7-2.jpg', 'electronics7-3.jpg', 1000000, 'electronics', '23/01/07', '거래중', '서울시 은평구 불광동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '통돌이 세탁기 새거 팝니다.', '새거처럼 깨끗해요', 'electronics8.jpg', 'electronics8-2.jpg', 'electronics8-3.jpg', 1200000, 'electronics', '23/01/08', '거래중', '서울시 은평구 응암동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '공기청정기 팝니다.', '실외기가 엄청 커요', 'electronics9.jpg', 'electronics9-2.jpg', 'electronics9-3.jpg', 1500000, 'electronics', '23/01/09', '거래중', '서울시 은평구 응암동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '중고 세탁기 싸게 가져가실분~', '새로 산 세탁기가 있어 내놓습니다.', 'electronics10.jpg', 'electronics10-2.jpg', 'electronics10-3.jpg', 1300000, 'electronics', '23/01/10', '거래중', '서울시 은평구 응암동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '스틸 냉장고 팝니다.', '새거에요', 'electronics11.jpg', 'electronics11-2.jpg', 'electronics11-3.jpg', 2500000, 'electronics', '23/01/11', '거래중', '서울시 은평구 갈현동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '옛날 드럼 세탁기 팝니다.', '네고 안됩니다.', 'electronics12.jpg', 'electronics12-2.jpg', 'electronics12-3.jpg', 800000, 'electronics', '23/01/12', '거래중', '서울시 은평구 갈현동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '한번도 사용하지않은 드럼세탁기 팔아요.', '경품당첨 된건데 팔아요', 'electronics13.jpg', 'electronics13-2.jpg', 'electronics13-3.jpg', 2000000, 'electronics', '23/01/13', '거래중', '서울시 은평구 갈현동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '딤채 3단 냉장고 새거 팝니다.', '네고 가능합니다.', 'electronics14.jpg', 'electronics14-2.jpg', 'electronics14-3.jpg', 2300000, 'electronics', '23/01/14', '거래중', '서울시 은평구 갈현동');
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '4인용 쇼파 팔아요', '흰색 예쁜 쇼파 급처합니다.', 'furniture1.jpg', 'furniture1-2.jpg', 'furniture1-3.jpg', 23000000, 'furniture', '23/01/01', '거래중', '부산시 해운대구 반송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '4인용 식탁, 의자 처분해요', '거의 새거입니다.', 'furniture2.jpg', 'furniture2-2.jpg', 'furniture2-3.jpg', 8000000, 'furniture', '23/01/02', '거래중', '부산시 해운대구 반송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '고급 쇼파 팝니다.', '싸게 내놓았으니 가져가세요', 'furniture3.jpg', 'furniture3-2.jpg', 'furniture3-3.jpg', 7000000, 'furniture', '23/01/03', '거래중', '부산시 해운대구 반송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '대리석 식탁 팝니다.', '의자도 같이 드려요', 'furniture4.jpg', 'furniture4-2.jpg', 'furniture4-3.jpg', 15000000, 'furniture', '23/01/04', '거래중', '부산시 해운대구 석대동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '스피커 달린 쇼파 팝니다.', '스피커는 고장났어요', 'furniture5.jpg', 'furniture5-2.jpg', 'furniture5-3.jpg', 16000000, 'furniture', '23/01/05', '거래중', '부산시 해운대구 석대동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '1인용 쇼파 두개 팝니다.', '색깔별로 있어요.', 'furniture6.jpg', 'furniture6-2.jpg', 'furniture6-3.jpg', 20000000, 'furniture', '23/01/06', '거래중', '부산시 해운대구 석대동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '원목 식탁의자 팔아요~', '나무냄새가 좋아요', 'furniture7.jpg', 'furniture7-2.jpg', 'furniture7-3.jpg', 22000000, 'furniture', '23/01/07', '거래중', '부산시 해운대구 석대동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '고급형 식탁 팝니다.', '의자는 색상이 두개에요.', 'furniture8.jpg', 'furniture8-2.jpg', 'furniture8-3.jpg', 26000000, 'furniture', '23/01/08', '거래중', '부산시 해운대구 반여동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '쥐색 쇼파 팔아요.', '생활 하자는 있습니다.', 'furniture9.jpg', 'furniture9-2.jpg', 'furniture9-3.jpg', 43000000, 'furniture', '23/01/09', '거래중', '부산시 해운대구 반여동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '회색 쇼파 팝니다.', '상태 매우 좋습니다.', 'furniture10.jpg', 'furniture10-2.jpg', 'furniture10-3.jpg', 52000000, 'furniture', '23/01/10', '거래중', '부산시 해운대구 반여동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '녹색 고급쇼파 팔아요.', '가격 싸게 해드릴테니 가져가세요', 'furniture11.jpg', 'furniture11-2.jpg', 'furniture11-3.jpg', 9000000, 'furniture', '23/01/11', '거래중', '부산시 해운대구 재송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '화이트색상 쇼파', '가죽 재질이라 때 안탑니다.', 'furniture12.jpg', 'furniture12-2.jpg', 'furniture12-3.jpg', 50000000, 'furniture', '23/01/12', '거래중', '부산시 해운대구 재송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '원목 서랍 급처', '급처분 합니다.', 'furniture13.jpg', 'furniture13-2.jpg', 'furniture13-3.jpg', 29000000, 'furniture', '23/01/13', '거래중', '부산시 해운대구 재송동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '시몬스 퀸 침대 팝니다.', '편안해요', 'furniture14.jpg', 'furniture14-2.jpg', 'furniture14-3.jpg', 18000000, 'furniture', '23/01/14', '거래중', '부산시 해운대구 재송동');
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '톰브라운 블랙', '딱 한번 입었어요.', 'clothing1.jpg', 'clothing1-2.jpg', 'clothing1-3.jpg', 450000, 'clothing', '23/01/01', '거래중', '대전 유성구 원내동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '톰브라운 그레이', '두번 입었어요.', 'clothing2.jpg', 'clothing2-2.jpg', 'clothing2-3.jpg', 450000, 'clothing', '23/01/02', '거래중', '대전 유성구 원내동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '무스너클 패딩', '따뜻해요.', 'clothing3.jpg', 'clothing3-2.jpg', 'clothing3-3.jpg', 1000000, 'clothing', '23/01/03', '거래중', '대전 유성구 원내동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '꼼데가르송 니트', '새상품 이에요.', 'clothing4.jpg', 'clothing4-2.jpg', 'clothing4-3.jpg', 350000, 'clothing', '23/01/04', '거래중', '대전 유성구 교촌동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '구찌 자켓', '완전 이뻐요.', 'clothing5.jpg', 'clothing5-2.jpg', 'clothing5-3.jpg', 800000, 'clothing', '23/01/05', '거래중', '대전 유성구 교촌동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '스톤 아일랜드 후드', '사이즈가 안맞아서 팝니다. ', 'clothing6.jpg', 'clothing6-2.jpg', 'clothing6-3.jpg', 400000, 'clothing', '23/01/06', '거래중', '대전 유성구 교촌동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '버버리 자켓', '너무 튀어서 팔아요.', 'clothing7.jpg', 'clothing7-2.jpg', 'clothing7-3.jpg', 600000, 'clothing', '23/01/07', '거래중', '대전 유성구 교촌동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '발렌시아가 점퍼', '입을만큼 입어서 팝니다.', 'clothing8.jpg', 'clothing8-2.jpg', 'clothing8-3.jpg', 400000, 'clothing', '23/01/08', '거래중', '대전 유성구 대정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '루이비통 반바지.', '여름 곧 옵니다.', 'clothing9.jpg', 'clothing9-2.jpg', 'clothing9-3.jpg', 300000, 'clothing', '23/01/09', '거래중', '대전 유성구 대정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '오프화이트 츄리닝', '기장이 길어서 팝니다', 'clothing10.jpg', 'clothing10-2.jpg', 'clothing10-3.jpg', 500000, 'clothing', '23/01/10', '거래중', '대전 유성구 대정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '지방시 가죽자켓 ', '좋은 가죽이라 짱짱해요.', 'clothing11.jpg', 'clothing11-2.jpg', 'clothing11-3.jpg', 500000, 'clothing', '23/01/11', '거래중', '대전 유성구 용계동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '지방시 코드.', '쿨거래 하실분만 연락주세요', 'clothing12.jpg', 'clothing12-2.jpg', 'clothing12-3.jpg', 100000, 'clothing', '23/01/12', '거래중', '대전 유성구 용계동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '오프화이트 반바지', '네고는 없습니다.', 'clothing13.jpg', 'clothing13-2.jpg', 'clothing13-3.jpg', 500000, 'clothing', '23/01/13', '거래중', '대전 유성구 용계동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '프라다 점퍼', '악마는 프라다를 입는다.', 'clothing14.jpg', 'clothing14-2.jpg', 'clothing14-3.jpg', 900000, 'clothing', '23/01/14', '거래중', '대전 유성구 용계동');
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '태그호이어 시계', '남성용 시계 팔아요.', 'acc1.jpg', 'acc1-2.jpg', 'acc1-3.jpg', 2200000, 'acc', '23/01/01', '거래중', '인천시 부평구 부평동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '펜디 시계', '여성용 시계 팔아요.', 'acc2.jpg', 'acc2-2.jpg', 'acc2-3.jpg', 950000, 'acc', '23/01/02', '거래중', '인천시 부평구 부평동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'yusin', '구찌 시계', '가죽밴드 여성용 시계 팔아요.', 'acc3.jpg', 'acc3-2.jpg', 'acc3-3.jpg', 350000, 'acc', '23/01/03', '거래중', '인천시 부평구 부평동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '로렉스 시계', '하자 없는 상품이에요.', 'acc4.jpg', 'acc4-2.jpg', 'acc4-3.jpg', 10000000, 'acc', '23/01/04', '거래중', '인천시 부평구 십정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '티파니 다이아 반지', '다이아 반지 팔아요.', 'acc5.jpg', 'acc5-2.jpg', 'acc5-3.jpg', 2500000, 'acc', '23/01/05', '거래중', '인천시 부평구 십정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '에르메스 팔찌', '사실 분만 연락 주세요. ', 'acc6.jpg', 'acc6-2.jpg', 'acc6-3.jpg', 500000, 'acc', '23/01/06', '거래중', '인천시 부평구 십정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'park', '티파니 반지', '네고 가능 연락주세요.', 'acc7.jpg', 'acc7-2.jpg', 'acc7-3.jpg', 1580000, 'acc', '23/01/07', '거래중', '인천시 부평구 십정동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '에르메스 팔찌', '생활기스 조금 있어요.', 'acc8.jpg', 'acc8-2.jpg', 'acc8-3.jpg', 450000, 'acc', '23/01/08', '거래중', '인천시 부평구 산곡동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '불가리 목걸이', '완전 새상품이에요.', 'acc9.jpg', 'acc9-2.jpg', 'acc9-3.jpg', 500000, 'acc', '23/01/09', '거래중', '인천시 부평구 산곡동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'hong', '부쉐론 목걸이', '실제로 보면 더 예뻐요', 'acc10.jpg', 'acc10-2.jpg', 'acc10-3.jpg', 3500000, 'acc', '23/01/10', '거래중', '인천시 부평구 산곡동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '에르메스 팔찌', '좋은 가죽이라 짱짱해요.', 'acc11.jpg', 'acc11-2.jpg', 'acc11-3.jpg', 300000, 'acc', '23/01/11', '거래중', '인천시 부평구 청천동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '샤넬 브로치', '금장로고 펄 장식이에요.', 'acc12.jpg', 'acc12-2.jpg', 'acc12-3.jpg', 1000000, 'acc', '23/01/12', '거래중', '인천시 부평구 청천동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '에르메스 귀걸이', '핑크골드 색이 예뻐요.', 'acc13.jpg', 'acc13-2.jpg', 'acc13-3.jpg', 2800000, 'acc', '23/01/13', '거래중', '인천시 부평구 청천동');
+insert into products(num, writer, name, comments, image01, image02, image03, price, category, inputdate, cate, address)
+values(myproduct.nextval, 'admin', '샤넬 귀걸이', '레터링 귀걸이에요.', 'acc14.jpg', 'acc14-2.jpg', 'acc14-3.jpg', 800000, 'acc', '23/01/14', '거래중', '인천시 부평구 청천동');
+
+
+
+
+-- 공지사항
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '3.47 버전 업데이트 안내' , '새로 업데이트된 버전을 다운받아주세요.', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '3.57 버전 업데이트 안내' , '후기올리기 기능이 추가되었습니다.', sysdate, 0, null, mynotice.currval, 0, 0);     
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '이웃간의 약속을 지켜주세요' , '최근 문제가 많이 발생합니다. 이웃간의 약속을 꼭 지켜주세요', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '거래규칙' , '거래에 필요한 규칙들을 꼭 숙지해주세요.', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '이미지 중복출력 수정' , '판매글 등록시 본문에 사진 중복으로 보여지는 오류가 수정되었습니다.', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '서버 오류 관련 안내' , '3/1~2 서버관련 심각한 문제로 복구작업 수행예정입니다,', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '스팸글 삭제조치' , '3/15일 스팸글 삭제조치가 발생될 예정입니다. 참고부탁드립니다.', sysdate, 0, null, mynotice.currval, 0, 0);
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '당근나라 업무시간 안내' , '관리자는 Qna 댓글을 9-6시까지만 확인가능하니 참고부탁드립니다.', sysdate, 0, null, mynotice.currval, 0, 0);     
+insert into notice(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(mynotice.nextval, 'admin', '당근나라 활동규칙사항' , '실제 촬영이미지를 등록합니다, 하자내용은 숨기지 않습니다', sysdate, 0, null, mynotice.currval, 0, 0);
+
+-- QNA
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '질문이요!!' , '사기꾼인지 어떻게 구분하나요?', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '회원가입 어떻게 해요?' , '냉무', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '고객센터가 있나요?' , '기능추가에 대해 문의할 것 이 있어요.', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '질문이 있습니다.' , '거래할때 사기를 안당하려면 어떤 방식을 추천하시나요?', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '당근나라 마스코트 인형 질문' , '당근나라 캐릭터 인형 혹시 판매하나요? 너무 이뻐요 ㅎㅎ', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '사기를 당했습니다. 어떻게 해야 할까요?' , '선입금했는데 잠수를 탔네요. 어떻게 해야 하나요?', sysdate, 0, null, myqna.currval, 0, 0);
+insert into qna(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+values(myqna.nextval, 'hong', '왠지 사기꾼인 것 같아요!!' , '중고 거래를 하려고 하는데 자꾸 명의가 다른 통장으로 입금하라고 하는데 이거 사기일까요?? ', sysdate, 0, null, myqna.currval, 0, 0);
+
+-- QNA 댓글 
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 1, 'yusin', '저도 궁금해요', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 2, 'admin', '회원탭에서 회원가입을 진행해주시면 됩니다.', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 3, 'admin', 'Qna에 질문해주시면 답변해 드립니다.', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 4, 'admin', '아쉽게도 판매하고 있지 않습니다.', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 5, 'yusin', '사기이력 조회 먼저 해보시는게 어떨까요?', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 6, 'hong', '그럼 조심하시는게 좋을 것 같아요', '2023/03/08');
+insert into qnacomments(cnum, no, writer, content, regdate)
+values(myqnacomment.nextval, 7, 'admin', '영양제등의 건강식품은 거래가 제한됩니다.', '2023/03/08');
+
+-- 거래후기
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '자전거가 너무 예뻐요' ,'튼튼하고 사진하고 똑같네요.','bicycle.jpg' ,null, sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '핸드폰 특S급이네요!' ,'포장도 안 뜯은 새거에요.','iphone1.jpg' ,'iphone2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '소파 너무 푹신해요' ,'저희 집하고 너무 잘 어울리네요~','couch1.jpg' ,'couch2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '식품 건조기 작동 잘되네요.' ,'고구마 말랭이 해먹는데 맛있어요 ㅎㅎ','dry1.jpg' ,'dry2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '사진보다 밑창이 더 얇아요..' ,'신발 밑창이 너무 얇아요..발이아프네요..','sandal1.jpg' ,'sandal2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '나이키 조던 운동화' ,'이거 구하기 너무 어려웠는데 ㅠㅠㅠ 판매자님 사랑해요.','shoe1.jpg' ,'null', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '카메라 작동 Good!' ,'제가 딱 원하는 구성으로 파셔서 너무좋아요!!!','camera1.jpg' ,'camera2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '카린 선글라스' ,'세련되고 예뻐요. 저렴하게 팔아주셔서 감사해요.','sun1.jpg' ,'sun2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '애플워치SE ' ,'애플워치는 신세계네요. 필수품!!~','watch1.jpg' ,'watch2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '가방 완전 유니크해요.' ,'가방 디자인 희귀템이네요!!','bag1.jpg' ,'bag2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', '와우 완전 득템!!!.' ,'닌텐도 스위치 2대 2천원에 샀어요!!! 완전 대박!','nintendo1.jpg' ,'nintendo2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+insert into REVIEW(no, writer, subject, content,image01,image02, regdate, readhit, remark, groupno, orderno, depth) 
+values(myREVIEW.nextval, 'admin', 'S급 싸게 샀어요' ,'동네주민분한테 발뮤다 토스트기 샀어요 ㅎㅎ','bag1.jpg' ,'bag2.jpg', sysdate, 0, null, myREVIEW.currval, 0, 0);
+
+-- 거래후기 댓글
+insert into reviewcomments(cnum, no, writer, content, regdate)
+values(myreviewcomment.nextval, 1, 'yusin', '멋진 상품이네요!', '2023/03/08');
+insert into reviewcomments(cnum, no, writer, content, regdate)
+values(myreviewcomment.nextval, 2, 'yusin', '새거 아닌가요?ㅎㅎ', '2023/03/08');
+insert into reviewcomments(cnum, no, writer, content, regdate)
+values(myreviewcomment.nextval, 3, 'yusin', '저도 가지고 싶어요', '2023/03/08');
+
+-- 사기이력 조회
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'catsoon','01072518261', '냥순', '후불 사기','물건만 가져가고 돈을 보내지 않았습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'catdol','01091762142', '냥돌', '상품권 사기','이미 사용된 상품권으로 거래했습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'yongsoon', '010816529172', '용순', '잠수','아무런 연락 없이 약속 장소에 나오지 않았습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'bae', '배배','01082619261', '선입금 사기','선입금 받고 벽돌을 보냈습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'prettyhee','01091828162', '영희v', '선입금 사기','선입금했으나 연락두절이 되어 알아보니 대포통장이었습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'filgood','01081920172', '필굿오리지날', '상품권 사기','이미 사용된 상품권으로 거래했습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'rokheart', '01051419282', '록하트', '장물 거래','훔친 장물로 거래했습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'vitamin77', '01027254192','비타민', '잠수','거래 약속을 잡아놓고 연락두절 되었습니다.',sysdate );
+insert into fraudboard(no, id, mid, phone, name, fraud,frauddetail ,regdate)
+values(myfraudboard.nextval, 'admin', 'subway', '01082527429','서브웨이', '후불 사기','택배 선발송후 물건이 도착하면 입금하겠다고 하였으나 연락두절 되었습니다.',sysdate );
+
+
+alter table products add constraint products_cate_fk foreign key(cate) references catee(korea);
+alter table comments add constraint comments_writer_fk foreign key(writer) references members(id) on delete cascade ;
+alter table products add foreign key(category) references categories(engname);
+alter table comments add constraint comments_no_fk foreign key(no) references products(num) on delete cascade ;
+alter table products add constraint products_writer_fk foreign key(writer) references members(id) on delete cascade ;
+alter table notice add constraint notice_writer_fk foreign key(writer) references members(id) on delete cascade;
+alter table review add constraint review_writer_fk foreign key(writer) references members(id) on delete cascade;
+alter table reviewcomments add constraint reviewcomments_no_fk foreign key(no) references review(no) on delete cascade;
+alter table qnacomments add constraint qnacomments_no_fk foreign key(no) references qna(no) on delete cascade;
+alter table qna add constraint qna_writer_fk foreign key(writer) references members(id) on delete cascade;
+
+commit;
+
+
+
+--drop table reviewcomments;
+--drop table qnacomments;
+--drop table review;
+--drop sequence myreviewcomment ;
+--drop sequence myqnacomment;
+--drop sequence myreview;
