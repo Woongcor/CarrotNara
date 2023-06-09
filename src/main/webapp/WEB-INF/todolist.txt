@@ -1,0 +1,77 @@
+# 샵은 주석입니다.
+home=com.shopping.controller.HomeController
+#home=com.shopping.controller.product.ProductListController
+# member section
+meLogin=com.shopping.controller.member.MemberLoginController
+meLogout=com.shopping.controller.member.MemberLogoutController
+meInsert=com.shopping.controller.member.MemberInsertController
+meUpdate=com.shopping.controller.member.MemberUpdateController
+meDetail=com.shopping.controller.member.MemberDetailController
+meDelete=com.shopping.controller.member.MemberDeleteController
+meList=com.shopping.controller.member.MemberListController
+#meIdCheck=com.shopping.controller.member.MemberIdCheckController
+# product section
+#prLogin=com.shopping.controller.product.ProductLoginController
+#prLogout=com.shopping.controller.product.ProductLogoutController
+prInsert=com.shopping.controller.product.ProductInsertController
+prUpdate=com.shopping.controller.product.ProductUpdateController
+prDelete=com.shopping.controller.product.ProductDeleteController
+prList=com.shopping.controller.product.ProductListController
+prListCar=com.shopping.controller.product.ProductListCarController
+prListFurniture=com.shopping.controller.product.ProductListFurnitureController
+prListAcc=com.shopping.controller.product.ProductListAccController
+prListElectronics=com.shopping.controller.product.ProductListElectronicsController
+prListClothing=com.shopping.controller.product.ProductListClothingController
+#prIdCheck=com.shopping.controller.product.ProductIdCheckController
+prDetail=com.shopping.controller.product.ProductDetailController
+# board section
+boInsert=com.shopping.controller.board.BoardInsertController
+boInsert2=com.shopping.controller.board.BoardInsertController2
+boInsert3=com.shopping.controller.board.BoardInsertController3
+#boInsert4=com.shopping.controller.board.BoardInsertController4
+boInsert5=com.shopping.controller.board.BoardInsertController5
+boInsert6=com.shopping.controller.board.BoardInsertController6
+boUpdate=com.shopping.controller.board.BoardUpdateController
+boUpdate2=com.shopping.controller.board.BoardUpdateController2
+boUpdate3=com.shopping.controller.board.BoardUpdateController3
+#boUpdate4=com.shopping.controller.board.BoardUpdateController4
+boUpdate5=com.shopping.controller.board.BoardUpdateController5
+boUpdate6=com.shopping.controller.board.BoardUpdateController6
+#boDelete=com.shopping.controller.board.BoardDeleteController
+boDelete2=com.shopping.controller.board.BoardDeleteController2
+boDelete3=com.shopping.controller.board.BoardDeleteController3
+#boDelete4=com.shopping.controller.board.BoardDeleteController4
+boDelete5=com.shopping.controller.board.BoardDeleteController5
+boDelete6=com.shopping.controller.board.BoardDeleteController6
+boDetail=com.shopping.controller.board.BoardDetailController
+boDetail2=com.shopping.controller.board.BoardDetailController2
+boDetail3=com.shopping.controller.board.BoardDetailController3
+#boDetail4=com.shopping.controller.board.BoardDetailController4
+boDetail5=com.shopping.controller.board.BoardDetailController5
+boDetail6=com.shopping.controller.board.BoardDetailController6
+boList=com.shopping.controller.board.BoardListController
+boList2=com.shopping.controller.board.BoardListController2
+boList3=com.shopping.controller.board.BoardListController3
+boList4=com.shopping.controller.board.BoardListController4
+boList5=com.shopping.controller.board.BoardListController5
+boList6=com.shopping.controller.board.BoardListController6
+boRegister2=com.shopping.controller.board.BoardRegisterController2
+boRegister3=com.shopping.controller.board.BoardRegisterController3
+boRegister5=com.shopping.controller.board.BoardRegisterController5
+##comment section
+cmInsert2=com.shopping.controller.comment.CommentInsertController2
+cmInsert3=com.shopping.controller.comment.CommentInsertController3
+cmDelete2=com.shopping.controller.comment.CommentDeleteController2
+cmDelete3=com.shopping.controller.comment.CommentDeleteController3
+cmList2=com.shopping.controller.comment.CommentListController2
+cmList3=com.shopping.controller.comment.CommentListController3
+cmUpdate2=com.shopping.controller.comment.CommentUpdateController2
+cmUpdate3=com.shopping.controller.comment.CommentUpdateController3
+cmInsert=com.shopping.controller.comment.CommentInsertController
+cmUpdate=com.shopping.controller.comment.CommentUpdateController
+cmDelete=com.shopping.controller.comment.CommentDeleteController
+cmList=com.shopping.controller.comment.CommentListController
+# mall section
+maInsert=com.shopping.controller.mall.MallInsertController
+maDelete=com.shopping.controller.mall.MallDeleteController
+maList=com.shopping.controller.mall.MallListController

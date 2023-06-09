@@ -1,0 +1,257 @@
+-- 관리자 세션
+-- create user shopping identified by oracle account unlock ;
+
+-- alter user shopping default tablespace users quota unlimited on users ;
+
+-- grant connect, resource to shopping ;
+
+-- 회원 테이블 생성
+create table members(
+    id varchar2(30) primary key,
+    name varchar2(50) not null,
+    password varchar2(50),
+    gender varchar2(10),
+    hobby varchar2(255),
+    hiredate date default sysdate,     
+    mpoint number default 0,
+    remark varchar2(255) default ' '
+);
+
+insert into members values('admin', '관리자', 'abc1234', '남자', null, sysdate, 0, null);
+insert into members values('hong', '홍길동', '1234', '남자', null, sysdate, 0, null);
+insert into members values('park', '박영희', '1234', '여자', null, sysdate, 0, null);
+commit ;
+select * from members ; 
+
+
+-- 시퀀스 및 게시물 테이블 생성
+create sequence myboard start with 1 increment by 1 nocache;
+
+create table boards(
+    no number ,
+    writer varchar2(50),
+    subject varchar2(50) not null,    
+    content varchar2(50),    
+    regdate date default sysdate,
+    readhit number default 0,
+    remark varchar2(255),
+    groupno number default 0,
+    orderno number default 0,
+    depth number default 0 
+);
+
+alter table boards
+add constraint boards_writer_fk
+foreign key(writer) references members(id)
+on delete set null ;
+
+select * from boards ;
+
+
+-- 상품 관련 시퀀스 및 테이블 생성
+-- 상품 카테고리 테이블
+-- engname) 영문 이름, korname) 한글 이름
+create table categories(
+   engname varchar2(50) primary key,
+   korname varchar2(50)
+);
+insert into categories values('child', '유아용품');
+insert into categories values('man', '남성용품');
+insert into categories values('woman', '여성용품');
+
+create sequence myproduct start with 10 increment by 1 nocache;
+
+-- 대표 이미지인 image01은 필수 입력 사항
+create table products(
+    num number primary key,
+    name varchar2(50),
+    company varchar2(50) not null,
+    comments varchar2(50),    
+    image01 varchar2(50) not null,
+    image02 varchar2(50),
+    image03 varchar2(50),
+    stock number default 0,
+    price number default 0,
+    point number default 0,
+    remark varchar2(255),
+    category varchar2(255),        
+    inputdate date default sysdate
+);
+
+-- 자식 테이블이 데이터를 소유하고 있으면 삭제 불가능하게 설정
+alter table products add foreign key(category) references categories(engname) ;
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '유아신발01', '가나신발', '이뻐요', 'child_shoes1.jpg', null, null, 100, 10000, 10, '' ,'child', '12/08/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '여성캐쥬얼01', 'TOP10', '아름다워요ㅗ요용', 'woman_casual2.gif', 'woman_casual3.gif', null, 70, 25000, 25, '' ,'woman', '12/08/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '유아신발02', '나이키키즈', '이뻐요이요이요', 'child_shoes6.jpg', null, null, 100, 30000, 30, '' ,'child', '12/08/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '남성캐쥬얼01', 'LMC', '멋져용ㅇㅇ', 'man_casual1.jpg', null, null, 100, 25000, 25, '' ,'man', '11/12/10');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '여성원피스01', '샤넬', '이뻐요~', 'onepiece1.gif', 'onepiece4.gif', null, 50, 40000, 40, '' ,'woman', '16/05/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '남성정장01', '에르메스', '멋있어용', 'man_fulldress1.jpg', 'man_fulldress3.jpg', 'man_fulldress4.jpg', 100, 50000, 50, '' , 'man', '15/07/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '남성신발01', '구찌', '이뻐요~', 'man_shoes1.jpg', 'onepiece4.gif', null, 200, 40000, 40, '' ,'man', '16/05/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '남성신발02', '나이키', '이뻐요~', 'man_shoes2.jpg', 'man_shoes3.jpg', null, 100, 30000, 30, '' , 'man', '16/05/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '여성신발01', '버버리', '이뻐요~!!!!!', 'woman_shoes7.jpg', 'woman_shoes8.jpg', null, 70, 23000, 23, '' ,'woman', '16/05/15');
+
+insert into products(num, name, company, comments, image01, image02, image03, stock, price, point, remark ,category, inputdate)
+values(myproduct.nextval, '여성신발02', '샤넬', '이뻐요~요이요이ㅛㅇ요요', 'woman_shoes6.jpg', 'woman_shoes1.jpg', woman_shoes2.jpg, 50, 20000, 20, '' ,'woman', '16/05/15');
+
+
+
+commit;
+
+
+
+-- 페이징 스크립트 관련 코딩
+delete from members ;
+insert into members values('admin', '관리자', '1234', '남자', null, sysdate, 0, null);
+insert into members values('kim9', '김구', '1234', '남자', null, sysdate, 0, null);
+insert into members values('yusin', '김유신', '1234', '남자', null, sysdate, 0, null);
+insert into members values('lee', '이순신', '1234', '남자', null, sysdate, 0, null);
+
+drop sequence myboard ;
+create sequence myboard start with 1 increment by 1 nocache;
+delete from boards;
+begin 
+   for i in 1..11 loop
+      insert into boards(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+      values(myboard.nextval, 'kim9', '김구'||to_char(i), 'jsp 잼있어요', sysdate, 0, null, myboard.currval, 0, 0);
+      
+      insert into boards(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+      values(myboard.nextval, 'yusin', '김유신'||to_char(i), 'jsp 잼있어요', sysdate, 0, null, myboard.currval, 0, 0);      
+      
+      insert into boards(no, writer, subject, content, regdate, readhit, remark, groupno, orderno, depth) 
+      values(myboard.nextval, 'lee', '이순신'||to_char(i), 'jsp 잼있어요', sysdate, 0, null, myboard.currval, 0, 0);     
+   end loop ;
+end ;
+/
+commit ;
+
+
+select ranking, no, subject, writer, content, readhit, regdate, groupno, orderno, depth, remark
+from ( select no, subject, writer, content, readhit, regdate, groupno, orderno, depth, remark, rank() over(order by no desc) as ranking
+       from boards )
+where ranking between 1 and 10 ;
+
+-- 댓글 관련 스크립트
+-- drop table comments ;
+create table comments(
+   cnum number primary key,
+   no int,
+   writer varchar2(255),
+   content varchar2(255),   
+   regdate date default sysdate 
+);
+
+alter table comments add constraint comments_no_fk foreign key(no) references boards(no) on delete cascade ;
+
+-- drop sequence mycomment ;
+create sequence mycomment start with 1 increment by 1 nocache ; 
+
+alter table comments add constraint comments_writer_fk foreign key(writer) references members(id) on delete cascade ; 
+
+insert into comments(cnum, no, writer, content, regdate)
+values(mycomment.nextval, 1, 'yusin', 'jQuery로 Ajax를 구현하면 매우 쉽습니다', sysdate );
+
+insert into comments(cnum, no, writer, content, regdate)
+values(mycomment.nextval, 1, 'lee', '강감찬의 매크로 사용법', sysdate );
+
+insert into comments(cnum, no, writer, content, regdate)
+values(mycomment.nextval, 2, 'yusin', '김유신은 의적인가?', sysdate );
+
+insert into comments(cnum, no, writer, content, regdate) 
+values(mycomment.nextval, 2, 'lee', '홍길동은은 의적인가?', sysdate );
+
+insert into comments(cnum, no, writer, content, regdate) 
+values(mycomment.nextval, 2, 'lee', '이순신의 명량 대첩', sysdate );
+
+commit ;
+
+
+
+-- drop sequence seqoid ;
+-- drop table orders purge ;
+
+create sequence seqoid start with 1 increment by 1 nocache ;
+create table orders(
+  oid number primary key,
+  mid varchar2(10) references members(id) on delete set null,
+  orderdate date default sysdate 
+  remark varchar2(255) default ' '
+);
+
+-- drop sequence seqodid ;
+-- drop table orderdetails purge ;
+
+create sequence seqodid start with 1 increment by 1 nocache ;
+
+-- pnum : 상품 번호, qty : 주문 수량, remark : 상품 삭제시 활용될 비고 컬럼
+create table orderdetails(
+  odid number primary key,
+  oid number references orders(oid) on delete cascade,
+  pnum number references products(num) on delete set null,
+  qty number default 0,
+  remark varchar2(255) default ' '
+);
+
+-- ShoppingBaskets : 나의 관심 상품을 저장할 테이블
+-- 내가(mid) 관심을 가지는 상품 번호화(pnum) 구매 수량(qty)을 저장
+create table ShoppingBaskets(
+    mid varchar2(30) primary key,   
+    pnum number default 0,
+    qty number default 0,
+);
+-- View01 
+select m.name, b.subject, b.content, b.regdate
+from members m inner join boards b 
+on m.id = b.writer 
+order by m.name ; 
+
+
+-- View02
+select m.name, count(*) as cnt
+from members m inner join boards b 
+on m.id = b.writer
+group by m.name
+order by m.name ; 
+
+-- View03
+-- 주문한 고객의 이름, 상품명, 주문 일자, 구매 수량, 금액을 구해 보세요.
+select m.name mname, p.name pname, o.orderdate, od.qty, p.price, od.qty*p.price as amount
+from ((members m inner join orders o
+on m.id=o.mid) inner join orderdetails od
+on o.oid=od.oid) inner join products p
+on od.pnum=p.num
+order by p.name desc, m.name asc ;
+
+-- View04
+-- 각 고객들의 대한 매출 총액을 확인합니다.
+select m.id, sum(od.qty*p.price) as sumtotal
+from ((members m inner join orders o
+on m.id=o.mid) inner join orderdetails od
+on o.oid=od.oid) inner join products p
+on od.pnum=p.num
+group by m.id ;
+
+-- View05
+-- 회원별 주문 건수를 조회하되, 주문이 없는 고객도 같이 확인합니다.
+select m.id, count(mid) as cnt
+from members m left join orders o
+on m.id=o.mid
+group by m.id
+order by cnt desc, m.id asc ;
